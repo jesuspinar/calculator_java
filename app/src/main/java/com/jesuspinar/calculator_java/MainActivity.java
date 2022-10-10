@@ -113,8 +113,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void percent() {
-        //todo: first eval
-        //todo: do percentage
+        eval();
+        double numb = Double.parseDouble(sb.toString());
+        numb = numb/100;
+        clear();
+        add(String.valueOf(numb));
     }
 
     private void del() {
