@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         tvScreen = findViewById(R.id.tvScreen);
         //Get buttons
         Button btnCE = findViewById(R.id.btnCE);
-        Button btnALT = findViewById(R.id.btnALT);
+        Button btnALT = findViewById(R.id.btnDel);
         Button btnPERC = findViewById(R.id.btnPERC);
         Button btnDIV = findViewById(R.id.btnDIV);
 
@@ -71,8 +71,9 @@ public class MainActivity extends AppCompatActivity {
             checkLogic();
             switch (v.getId()){
                 case R.id.btnCE:   clear(); break;
-                case R.id.btnALT:  alter(); break;
+                case R.id.btnDel:  del(); break;
                 case R.id.btnPERC: percent(); break;
+                case R.id.btnEQ:   eval(); break;
                 case R.id.btnDIV:  add("/"); break;
                 case R.id.btnMULT: add("*"); break;
                 case R.id.btnSUB:  add("-"); break;
@@ -93,13 +94,17 @@ public class MainActivity extends AppCompatActivity {
         //Toast errors
     }
 
+    private void eval() {
+    }
+
     private void percent() {
     }
 
-    private void alter() {
+    private void del() {
     }
 
     private void clear() {
+        tvScreen.setText("");
     }
 
     private void checkLogic() {
