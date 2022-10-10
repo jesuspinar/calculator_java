@@ -134,6 +134,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkLogic() {
+        if (sb.length() > 0 ){
+            char c = sb.charAt(sb.length()-1);
+            switch (c){case '/': case '*': case'-': case'+': case'.': del();}
+        }
     }
 
     private void add(String value){
