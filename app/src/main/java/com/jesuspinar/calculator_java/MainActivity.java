@@ -8,11 +8,13 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tvScreen;
+    private StringBuilder sb ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sb = new StringBuilder();
         //Get Display
         tvScreen = findViewById(R.id.tvScreen);
         //Get buttons
@@ -101,20 +103,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void del() {
+        String current = tvScreen.getText().toString();
+        if (current.length() > 0) {
+            sb = sb.deleteCharAt(current.length()-1);
+            tvScreen.setText(sb.toString());
+        }
     }
 
     private void clear() {
         tvScreen.setText("");
+        sb.setLength(0);
     }
 
     private void checkLogic() {
     }
 
     private void add(String value){
-        StringBuilder sb = new StringBuilder();
         String current = tvScreen.getText().toString();
-        sb.append(current).append(value);
-        tvScreen.setText(sb.toString());
+        sb.append(value);
+        tvScreen.setText(sb);
     }
 
 }
