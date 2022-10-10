@@ -6,6 +6,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.ezylang.evalex.EvaluationException;
+import com.ezylang.evalex.Expression;
+import com.ezylang.evalex.data.EvaluationValue;
+import com.ezylang.evalex.parser.ParseException;
+
 public class MainActivity extends AppCompatActivity {
     private TextView tvScreen;
     private StringBuilder sb ;
@@ -91,15 +96,25 @@ public class MainActivity extends AppCompatActivity {
         btnSUB.setOnClickListener(symbols);
         btnSUM.setOnClickListener(symbols);
         btnDOT.setOnClickListener(symbols);
-        //Valid eval
-        //Set result
+        btnEQ.setOnClickListener(symbols);
+        //Check logic
         //Toast errors
     }
 
     private void eval() {
+        Expression expression = new Expression(sb.toString());
+        try {
+            EvaluationValue result = expression.evaluate();
+            clear();
+            add(result.getStringValue());
+        } catch (EvaluationException | ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private void percent() {
+        //todo: first eval
+        //todo: do percentage
     }
 
     private void del() {
@@ -121,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
     private void add(String value){
         String current = tvScreen.getText().toString();
         sb.append(value);
-        tvScreen.setText(sb);
+        tvScreen.setText(sb.toString());
     }
 
 }
