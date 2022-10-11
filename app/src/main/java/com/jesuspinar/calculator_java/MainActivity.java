@@ -75,17 +75,19 @@ public class MainActivity extends AppCompatActivity {
         btn09.setOnClickListener(nums);
 
         View.OnClickListener symbols = v -> {
-            checkLogic();
-            switch (v.getId()){
-                case R.id.btnCE:   clear(); break;
-                case R.id.btnDel:  del(); break;
-                case R.id.btnPERC: percent(); break;
-                case R.id.btnEQ:   eval(); break;
-                case R.id.btnDIV:  add("/"); break;
-                case R.id.btnMULT: add("*"); break;
-                case R.id.btnSUB:  add("-"); break;
-                case R.id.btnSUM:  add("+"); break;
-                case R.id.btnDOT:  add("."); break;
+            boolean isValid = checkLogic();
+            if (isValid){
+                switch (v.getId()){
+                    case R.id.btnCE:   clear(); break;
+                    case R.id.btnDel:  del(); break;
+                    case R.id.btnPERC: percent(); break;
+                    case R.id.btnEQ:   eval(); break;
+                    case R.id.btnDIV:  add("/"); break;
+                    case R.id.btnMULT: add("*"); break;
+                    case R.id.btnSUB:  add("-"); break;
+                    case R.id.btnSUM:  add("+"); break;
+                    case R.id.btnDOT:  add("."); break;
+                }
             }
         };
         btnCE.setOnClickListener(symbols);
@@ -133,15 +135,18 @@ public class MainActivity extends AppCompatActivity {
         sb.setLength(0);
     }
 
-    private void checkLogic() {
-        if (sb.length() > 0 ){
+    private boolean checkLogic() {
+        if(sb.length() <= 0){
+           return false;//can't add symbols
+        }
+        else{
             char c = sb.charAt(sb.length()-1);
             switch (c){case '/': case '*': case'-': case'+': case'.': del();}
+            return true;//can change last symbol for a new select
         }
     }
 
     private void add(String value){
-        String current = tvScreen.getText().toString();
         sb.append(value);
         tvScreen.setText(sb.toString());
     }
