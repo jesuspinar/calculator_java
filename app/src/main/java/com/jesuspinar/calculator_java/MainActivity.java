@@ -8,12 +8,15 @@ import android.widget.TextView;
 
 import com.ezylang.evalex.EvaluationException;
 import com.ezylang.evalex.Expression;
+import com.ezylang.evalex.config.ExpressionConfiguration;
 import com.ezylang.evalex.data.EvaluationValue;
 import com.ezylang.evalex.parser.ParseException;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tvScreen;
     private StringBuilder sb ;
+    private final ExpressionConfiguration configuration = ExpressionConfiguration.builder()
+            .decimalPlacesRounding(2).build();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void eval() {
-        Expression expression = new Expression(sb.toString());
+        Expression expression = new Expression(sb.toString(),configuration);
         try {
             EvaluationValue result = expression.evaluate();
             clear();
