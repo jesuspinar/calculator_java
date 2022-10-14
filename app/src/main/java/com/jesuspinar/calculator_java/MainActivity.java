@@ -14,6 +14,7 @@ import com.ezylang.evalex.parser.ParseException;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tvScreen;
+    private boolean dot;
     private StringBuilder sb ;
     private final ExpressionConfiguration configuration = ExpressionConfiguration.builder()
             .decimalPlacesRounding(2).build();
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         sb = new StringBuilder();
+        dot = true;
         //Get Display
         tvScreen = findViewById(R.id.tvScreen);
         //Get buttons
@@ -85,11 +87,11 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.btnDel:  del(); break;
                     case R.id.btnPERC: percent(); break;
                     case R.id.btnEQ:   eval(); break;
-                    case R.id.btnDIV:  add("/"); break;
-                    case R.id.btnMULT: add("*"); break;
-                    case R.id.btnSUB:  add("-"); break;
-                    case R.id.btnSUM:  add("+"); break;
-                    case R.id.btnDOT:  add("."); break;
+                    case R.id.btnDIV:  add("/");break;
+                    case R.id.btnMULT: add("*");break;
+                    case R.id.btnSUB:  add("-");break;
+                    case R.id.btnSUM:  add("+");break;
+                    case R.id.btnDOT:  add(".");break;
                 }
             }
         };
@@ -122,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         double numb = Double.parseDouble(sb.toString());
         numb = numb/100;
         clear();
-        add(String.valueOf(numb));
+        add(String.format("%.4s",numb));
     }
 
     private void del() {
