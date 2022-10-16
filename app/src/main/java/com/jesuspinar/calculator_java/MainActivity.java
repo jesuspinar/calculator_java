@@ -120,11 +120,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void percent() {
+        add("/100");
         eval();
-        double numb = Double.parseDouble(sb.toString());
-        numb = numb/100;
-        clear();
-        add(String.format("%.4s",numb));
     }
 
     private void del() {
