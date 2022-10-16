@@ -14,7 +14,6 @@ import com.ezylang.evalex.parser.ParseException;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tvScreen;
-    private boolean dot;
     private StringBuilder sb ;
     private final ExpressionConfiguration configuration = ExpressionConfiguration.builder()
             .decimalPlacesRounding(2).build();
@@ -24,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         sb = new StringBuilder();
-        dot = true;
         //Get Display
         tvScreen = findViewById(R.id.tvScreen);
         //Get buttons
@@ -53,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnEQ = findViewById(R.id.btnEQ);
 
         //Add listeners
-        View.OnClickListener nums = v -> {
+        View.OnClickListener num = v -> {
             switch (v.getId()){
                 case R.id.btn00: add("0"); break;
                 case R.id.btn01: add("1"); break;
@@ -68,16 +66,16 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        btn00.setOnClickListener(nums);
-        btn01.setOnClickListener(nums);
-        btn02.setOnClickListener(nums);
-        btn03.setOnClickListener(nums);
-        btn04.setOnClickListener(nums);
-        btn05.setOnClickListener(nums);
-        btn06.setOnClickListener(nums);
-        btn07.setOnClickListener(nums);
-        btn08.setOnClickListener(nums);
-        btn09.setOnClickListener(nums);
+        btn00.setOnClickListener(num);
+        btn01.setOnClickListener(num);
+        btn02.setOnClickListener(num);
+        btn03.setOnClickListener(num);
+        btn04.setOnClickListener(num);
+        btn05.setOnClickListener(num);
+        btn06.setOnClickListener(num);
+        btn07.setOnClickListener(num);
+        btn08.setOnClickListener(num);
+        btn09.setOnClickListener(num);
 
         View.OnClickListener symbols = v -> {
             boolean isValid = checkLogic();
@@ -91,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.btnMULT: add("*");break;
                     case R.id.btnSUB:  add("-");break;
                     case R.id.btnSUM:  add("+");break;
-                    case R.id.btnDOT:  add(".");break;
+                    case R.id.btnDOT:  if (!hasDot()){add(".");}break;
                 }
             }
         };
@@ -104,8 +102,6 @@ public class MainActivity extends AppCompatActivity {
         btnSUM.setOnClickListener(symbols);
         btnDOT.setOnClickListener(symbols);
         btnEQ.setOnClickListener(symbols);
-        //Check logic
-        //Toast errors
     }
 
     private void eval() {
@@ -138,14 +134,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean checkLogic() {
+        //can't add symbols
         if(sb.length() <= 0){
-           return false;//can't add symbols
+           return false;
         }
+        //can change last symbol for a new select
         else{
             char c = sb.charAt(sb.length()-1);
             switch (c){case '/': case '*': case'-': case'+': case'.': del();}
-            return true;//can change last symbol for a new select
+            return true;
         }
+    }
+
+    /*Checks if the String builder has a dot before symbol */
+    private boolean hasDot(){
+        boolean hasDot = false;
+        for (int i = 1; i < sb.length(); i++) {
+            if (!hasDot && sb.charAt(i)  == '.'){
+                hasDot = true;//start track
+            }
+            else if (hasDot){
+                switch (sb.charAt(i)){
+                    case '/': case '*': case'-': case'+': hasDot = false;
+                }
+            }
+        }
+        return hasDot;
     }
 
     private void add(String value){
